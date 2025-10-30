@@ -6,8 +6,11 @@ on:
       - main
 
 jobs:
+  # =========================================================
+  # 🏗️ FRONTEND BUILD
+  # =========================================================
   build-frontend:
-    name: Build & Deploy Frontend
+    name: Build Frontend
     runs-on: ubuntu-latest
 
     steps:
@@ -37,6 +40,15 @@ jobs:
           docker tag frontend ${{ secrets.DOCKER_USERNAME }}/frontend:latest
           docker push ${{ secrets.DOCKER_USERNAME }}/frontend:latest
 
+  # =========================================================
+  # 🚀 FRONTEND DEPLOY
+  # =========================================================
+  deploy-frontend:
+    name: Deploy Frontend
+    runs-on: ubuntu-latest
+    needs: build-frontend
+
+    steps:
       - name: Deploy Frontend to EC2
         uses: appleboy/ssh-action@v0.1.10
         with:
@@ -54,10 +66,13 @@ jobs:
             echo "Running new frontend container..."
             docker run -d --name frontend -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/frontend:latest
 
+  # =========================================================
+  # 🏗️ BACKEND BUILD
+  # =========================================================
   build-backend:
-    name: Build & Deploy Backend
+    name: Build Backend
     runs-on: ubuntu-latest
-    needs: build-frontend  # Waits for frontend build to complete
+    needs: build-frontend
 
     steps:
       - name: Checkout Code
@@ -83,6 +98,15 @@ jobs:
           docker tag backend-app ${{ secrets.DOCKER_USERNAME }}/backend-app:latest
           docker push ${{ secrets.DOCKER_USERNAME }}/backend-app:latest
 
+  # =========================================================
+  # 🚀 BACKEND DEPLOY
+  # =========================================================
+  deploy-backend:
+    name: Deploy Backend
+    runs-on: ubuntu-latest
+    needs: build-backend
+
+    steps:
       - name: Deploy Backend to EC2
         uses: appleboy/ssh-action@v0.1.6
         with:
