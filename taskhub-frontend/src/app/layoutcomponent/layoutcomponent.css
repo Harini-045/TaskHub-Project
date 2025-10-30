@@ -1,0 +1,12 @@
+.layout-grid {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  height: 100vh;
+}
+
+.main-content {
+  background: #f9f9f9;
+  padding: 2rem;
+  min-height: 100vh;
+  width: 100%;
+}

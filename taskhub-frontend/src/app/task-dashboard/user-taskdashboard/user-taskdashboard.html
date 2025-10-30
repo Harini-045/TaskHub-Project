@@ -1,0 +1,118 @@
+<div class="kanban-header d-flex justify-content-between align-items-center mb-3">
+  <h2 class="fw-bold">My Tasks</h2>
+  <button class="badge-btn" (click)="openAddTaskCard()">+ Add Task</button>
+</div>
+
+<!-- Add Task Modal -->
+@if (addTaskMode) {
+  <ng-container>
+    <div class="modal-overlay" (click)="closeAddTaskCard()"></div>
+    <div class="task-modal-card">
+      <h2>Add New Task</h2>
+
+      <input [(ngModel)]="newTaskData.taskTitle" placeholder="Task Title" />
+      <textarea [(ngModel)]="newTaskData.taskDescription" placeholder="Description"></textarea>
+      <input type="date" [(ngModel)]="newTaskData.dueDate" />
+
+      <!-- User dropdown -->
+      <select [(ngModel)]="newTaskData.user">
+        <option [ngValue]="null">Select Assignee</option>
+        @for (user of allUsers; track $index) {
+          <option [ngValue]="user">{{ user.username }}</option>
+        }
+      </select>
+
+      <input [(ngModel)]="newTaskData.priority" placeholder="Priority (e.g. High, Medium, Low)" />
+
+      <!-- Label dropdown -->
+      <select [(ngModel)]="newTaskData.label">
+        <option [ngValue]="null">Select Label</option>
+        @for (label of allLabels; track $index) {
+          <option [ngValue]="label">{{ label.labelName }}</option>
+        }
+      </select>
+
+      <div class="task-modal-actions">
+        <button (click)="saveNewTask()">Save</button>
+        <button (click)="closeAddTaskCard()">Cancel</button>
+      </div>
+    </div>
+  </ng-container>
+}
+
+<!-- Kanban Board -->
+<div class="kanban-board">
+  @for (label of allLabels; track $index) {
+    <div class="kanban-column">
+      <div class="kanban-column-header">
+        {{ label.labelName }}
+        <span class="col-count">{{ getColumnTasks(label.labelName)?.length || 0 }}</span>
+      </div>
+
+      <div class="kanban-task-list">
+        @if ((getColumnTasks(label.labelName)?.length ?? 0) > 0) {
+          @for (item of getColumnTasks(label.labelName); track $index) {
+            <div class="kanban-task-card" (click)="openTask(item)">
+              <div class="task-title">{{ item.taskTitle }}</div>
+              <div class="task-sub">
+                <span class="task-date">
+                  <i class="bi bi-calendar2-event"></i>
+                  {{ item.dueDate | date: 'MMM d, y' }}
+                </span>
+                <span class="task-id">#{{ item.taskId }}</span>
+              </div>
+              <div class="task-assignee">{{ item.user?.username }}</div>
+            </div>
+          }
+        } @else {
+          <div class="empty-column">No tasks</div>
+        }
+      </div>
+    </div>
+  }
+</div>
+
+<!-- View/Edit Modal -->
+@if (selectedTask) {
+  <ng-container>
+    <div class="modal-overlay" (click)="closeTaskModal()"></div>
+    <div class="task-modal-card">
+      @if (!isEditMode) {
+        <div>
+          <h2>{{ selectedTask.taskTitle }}</h2>
+          <p><b>Description:</b> {{ selectedTask.taskDescription }}</p>
+          <p><b>Due Date:</b> {{ selectedTask.dueDate | date: 'MMM d, y' }}</p>
+          <p><b>Assignee:</b> {{ selectedTask.user?.username }}</p>
+          <p><b>Priority:</b> {{ selectedTask.priority }}</p>
+          <p><b>Status:</b> {{ selectedTask.label?.labelName }}</p>
+
+          <div class="task-modal-actions">
+            <button (click)="editTask()">Edit</button>
+            <button class="danger" (click)="deleteTask()">Delete</button>
+            <button (click)="closeTaskModal()">Close</button>
+          </div>
+        </div>
+      }
+
+      @if (isEditMode) {
+        <div>
+          <input [(ngModel)]="editTaskData!.taskTitle" placeholder="Task Title" />
+          <textarea [(ngModel)]="editTaskData!.taskDescription" placeholder="Description"></textarea>
+          <input type="date" [(ngModel)]="editTaskData!.dueDate" />
+          <input [(ngModel)]="editTaskData!.priority" placeholder="Priority" />
+
+          <select [(ngModel)]="editTaskData!.labelId">
+            @for (item of allLabels; track $index) {
+              <option [ngValue]="item">{{ item.labelName }}</option>
+            }
+          </select>
+
+          <div class="task-modal-actions">
+            <button (click)="saveTask()">Save</button>
+            <button (click)="isEditMode = false">Cancel</button>
+          </div>
+        </div>
+      }
+    </div>
+  </ng-container>
+}

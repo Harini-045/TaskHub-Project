@@ -1,0 +1,108 @@
+<div class="container-fluid d-flex align-items-center justify-content-center bg-light" style="height: fit-content;">
+
+  <div class="row w-100 mx-0 shadow-lg rounded-4 overflow-hidden" style="max-width: 900px; background: white;">
+    <!-- Left side image -->
+    <div class="col-md-6 d-none d-md-block p-0">
+      <img
+        src="assets/register-illustration.svg"
+        alt="Register Illustration"
+        class="img-fluid h-100 w-100 object-fit-cover"
+      />
+    </div>
+
+    <!-- Right side form -->
+    <div class="col-md-6 d-flex align-items-center justify-content-center p-5">
+      <div class="w-100" style="max-width: 340px;">
+        <div class="text-center mb-3">
+          <h3 class="fw-bold text-primary">Create Account ✨</h3>
+          <p class="text-muted">Register to get started</p>
+        </div>
+
+        <form (ngSubmit)="handleFormSubmit()" #registerForm="ngForm">
+          <!-- Username -->
+          <div class="mb-3">
+            <label for="username" class="form-label fw-semibold">Username</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              class="form-control"
+              required
+              [(ngModel)]="registerUser.username"
+              placeholder="Enter username"
+            />
+          </div>
+
+          <!-- Email -->
+          <div class="mb-3">
+            <label for="email" class="form-label fw-semibold">Email address</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              class="form-control"
+              required
+              [(ngModel)]="registerUser.email"
+              placeholder="Enter email"
+            />
+          </div>
+
+          <!-- Password -->
+          <div class="mb-3">
+            <label for="password" class="form-label fw-semibold">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              class="form-control"
+              required
+              [(ngModel)]="registerUser.userPassword"
+              placeholder="Enter password"
+            />
+          </div>
+
+          <!-- Role Selection -->
+          <div class="mb-3">
+            <label for="role" class="form-label fw-semibold">Select Role</label>
+            <select
+              id="role"
+              name="role"
+              class="form-select"
+              required
+              [(ngModel)]="selectedRoleId"
+            >
+              <option value="" disabled selected>Select Role</option>
+              @for (role of roles; track $index) {
+                <option [value]="role.roleId">{{ role.roleName }}</option>
+              }
+            </select>
+          </div>
+
+          <!-- Error message -->
+          @if (errorMessage) {
+          <div class="alert alert-danger py-2 small">
+            {{ errorMessage }}
+          </div>
+          }
+
+          <!-- Submit button -->
+          <button
+            type="submit"
+            class="btn btn-primary w-100 mt-2"
+            [disabled]="!registerForm.form.valid"
+          >
+            Register
+          </button>
+        </form>
+
+        <!-- Login link -->
+        <div class="text-center mt-3">
+          <small class="text-muted">
+            Already have an account?
+            <a routerLink="/login" class="text-decoration-none text-primary fw-semibold">Login</a>
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

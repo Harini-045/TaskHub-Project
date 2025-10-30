@@ -1,0 +1,83 @@
+<div class="team-list-card">
+  <div class="team-header-row">
+    <h2>Teams</h2>
+    <button class="btn btn-blue" (click)="openAddTeamModal()">+ Add Team</button>
+  </div>
+  <table class="custom-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Team Name</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (team of allTeams; track $index) {
+        <tr>
+          <td>{{ $index + 1 }}</td>
+          <td>{{ team.teamName }}</td>
+          <td>
+            <button class="btn btn-blue" (click)="openEditTeamModal(team)">Edit</button>
+            <button class="btn btn-red" (click)="deleteTeam(team.teamId)">Delete</button>
+            <button class="btn btn-gray" (click)="viewUsers(team.teamId)">Users</button>
+          </td>
+        </tr>
+      }
+      @if (!allTeams.length) {
+        <tr>
+          <td colspan="3" class="empty-msg">No teams found.</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
+
+@if (teamModalOpen) {
+  <ng-container>
+    <div class="modal-overlay" (click)="closeTeamModal()"></div>
+    <div class="team-modal-card">
+      <h3>{{ isEditMode ? 'Edit Team' : 'Add New Team' }}</h3>
+      <input [(ngModel)]="editTeamData.teamName" placeholder="Team Name" />
+      <div class="team-modal-actions">
+        <button (click)="saveTeam()">{{ isEditMode ? 'Update' : 'Create' }}</button>
+        <button (click)="closeTeamModal()">Cancel</button>
+      </div>
+    </div>
+  </ng-container>
+}
+
+@if (showUsersModal) {
+  <ng-container>
+    <div class="modal-overlay" (click)="closeUsersModal()"></div>
+    <div class="users-modal-card">
+      <div class="modal-title-row">
+        <span class="modal-icon">👥</span>
+        <span class="modal-title">
+          Users in <b>{{ selectedTeam?.teamName }}</b>
+        </span>
+      </div>
+      <table class="custom-table users-table">
+        <thead>
+          <tr><th>#</th><th>Username</th><th>Email</th></tr>
+        </thead>
+        <tbody>
+          @for (user of teamUsers; track $index) {
+            <tr>
+              <td>{{ $index + 1 }}</td>
+              <td>{{ user.username }}</td>
+              <td>{{ user.email }}</td>
+            </tr>
+          }
+          @if (!teamUsers.length) {
+            <tr>
+              <td colspan="3" class="empty-msg">No users in this team.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+      <div style="text-align:center;">
+        <button class="btn btn-gray close-btn" (click)="closeUsersModal()">&#10005; Close</button>
+      </div>
+    </div>
+  </ng-container>
+}

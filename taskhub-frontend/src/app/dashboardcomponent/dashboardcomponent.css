@@ -1,0 +1,27 @@
+.stat-card {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 15px;
+  color: #000;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+.icon {
+  width: 50px;
+  height: 50px;
+  font-size: 1.5rem;
+}
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Use center for horizontal center */
+  justify-content: flex-start; /* Use center for vertical center */
+  height: 100%;
+}
+

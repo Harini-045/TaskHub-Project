@@ -1,0 +1,117 @@
+.user-list-bg {
+  background: #eff1f4;
+  min-height: 100vh;
+  padding: 48px 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.user-list-card {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 5px 36px rgba(0,0,0,0.09);
+  padding: 38px 34px;
+  margin: 0 auto;
+  max-width: 1000px;
+  width: 100%;
+}
+
+.user-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 17px;
+}
+
+.user-header-row h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #f8fafd;
+  border-radius: 12px;
+  overflow: hidden;
+  font-size: 1.05rem;
+  margin-top: 11px;
+}
+
+.custom-table th,
+.custom-table td {
+  padding: 13px 12px;
+  text-align: left;
+}
+
+.custom-table thead {
+  background: #e9eef6;
+  font-weight: bold;
+}
+
+.custom-table tr {
+  border-bottom: 1px solid #e3e7ed;
+}
+
+.custom-table tr:last-child {
+  border-bottom: none;
+}
+
+.empty-msg {
+  text-align: center;
+  color: #a0a7b8;
+  font-style: italic;
+}
+
+.btn {
+  border: none;
+  border-radius: 5px;
+  margin-right: 7px;
+  padding: 8px 19px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+  outline: none;
+}
+
+.btn:last-child {
+  margin-right: 0;
+}
+
+.btn-blue { background: #1976d2; color: white; }
+.btn-blue:hover { background: #0056b3; }
+.btn-red { background: #e74a3b; color: white; }
+.btn-red:hover { background: #bc3123; }
+
+.user-modal-card {
+  z-index: 2000;
+  position: fixed;
+  top: 52%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(70,80,120,0.18);
+  padding: 34px 29px 22px 29px;
+  min-width: 320px;
+  max-width: 340px;
+  width: 96%;
+}
+
+.user-modal-card input {
+  width: 100%;
+  padding: 7px 10px;
+  margin: 7px 0 14px 0;
+  border: 1px solid #d4e1ef;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.user-modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}

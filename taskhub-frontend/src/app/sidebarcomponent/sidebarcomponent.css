@@ -1,0 +1,31 @@
+.sidebar {
+  background-color: #111;
+  color: #fff;
+  min-height: 100vh;
+}
+
+.nav-link {
+  color: #ddd !important;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.nav-link:hover {
+  background-color: #222;
+  color: #fff !important;
+  transform: translateX(4px);
+}
+
+.nav-link.active {
+  background-color: #0d6efd;
+  color: #fff !important;
+  font-weight: 600;
+}
+
+.border-bottom {
+  border-bottom: 1px solid #333 !important;
+}
+
+.border-top {
+  border-top: 1px solid #333 !important;
+}

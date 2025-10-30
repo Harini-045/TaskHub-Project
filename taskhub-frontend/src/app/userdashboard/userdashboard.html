@@ -1,0 +1,75 @@
+  <div class="user-list-card">
+    <div class="user-header-row">
+      <h2>Users</h2>
+      <button class="btn btn-blue" (click)="openAddUserModal()">+ Add User</button>
+    </div>
+    <table class="custom-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Roles</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (user of allUsers; track $index) {
+          <tr>
+            <td>{{ $index + 1 }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+                @for (item of user.allRoles; track $index) {
+              <span>
+                <span class="role-badge">{{ item.roleName }}</span>
+              </span>
+            }
+            </td>
+            <td>
+              <button class="btn btn-blue" (click)="openEditUserModal(user)">Edit</button>
+              <button class="btn btn-red" (click)="deleteUser(user.userId)">Delete</button>
+            </td>
+          </tr>
+        }
+        @if (!allUsers.length) {
+          <tr>
+            <td colspan="5" class="empty-msg">No users found.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+@if (userModalOpen) {
+  <ng-container>
+    <div class="modal-overlay" (click)="closeUserModal()"></div>
+    <div class="user-modal-card">
+      <h3>{{ isEditMode ? 'Edit User' : 'Add New User' }}</h3>
+      <input [(ngModel)]="editUserData.username" placeholder="Username" />
+      <input [(ngModel)]="editUserData.email" type="email" placeholder="Email" />
+      <input [(ngModel)]="editUserData.userPassword" type="password" placeholder="Password" [required]="!isEditMode"/>
+
+      <div class="roles-area">
+        <span class="roles-title">Roles:</span>
+        @for (item of allRoles; track $index) {
+        <span>
+          <label class="role-checkbox">
+            <input
+              type="checkbox"
+              [checked]="isRoleSelected(item.roleId)"
+              (change)="toggleRole(item.roleId)"
+            />
+            {{ item.roleName }}
+          </label>
+        </span>
+    }
+      </div>
+
+      <div class="user-modal-actions">
+        <button (click)="saveUser()">{{ isEditMode ? 'Update' : 'Create' }}</button>
+        <button (click)="closeUserModal()">Cancel</button>
+      </div>
+    </div>
+  </ng-container>
+}

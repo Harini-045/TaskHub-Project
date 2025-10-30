@@ -1,0 +1,32 @@
+<div class="d-flex vh-100 text-white">
+  <!-- Sidebar -->
+  <nav class="sidebar d-flex flex-column p-3" style="width: 250px; background-color: #111;">
+    <!-- Logo / Title -->
+    <div class="text-center mb-4 border-bottom pb-3">
+      <h4 class="fw-bold mb-0 text-white">TaskHub</h4>
+      <small class="text-secondary">Manage Smarter</small>
+    </div>
+
+    <!-- Navigation Items -->
+    <ul class="nav flex-column mb-auto">
+      @for (item of functionalities; track $index) {
+        <li class="nav-item mb-2">
+          <a
+            [routerLink]="item.route"
+            routerLinkActive="active"
+            class="nav-link text-white d-flex align-items-center px-3 py-2 rounded-3"
+            style="transition: all 0.3s ease;"
+          >
+            <i class="bi {{item.icon}} me-2 fs-5"></i>
+            <span>{{ item.name }}</span>
+          </a>
+        </li>
+      }
+    </ul>
+
+    <!-- Footer / Logout (optional) -->
+    <div class="mt-auto pt-3 border-top text-center">
+      <small class="text-secondary">© 2025 TaskHub</small>
+    </div>
+  </nav>
+</div>
